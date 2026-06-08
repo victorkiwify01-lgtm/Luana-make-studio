@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luana Make Studio - Agendamento Online</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Elementos de beleza decorativos no fundo da página (Marcas d'água) -->
+    <div class="bg-watermarks-container">
+        <!-- Perfume -->
+        <svg class="bg-watermark watermark-1" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+            <rect x="42" y="10" width="16" height="12" rx="2" />
+            <rect x="46" y="22" width="8" height="6" />
+            <path d="M25 28 H75 V85 C75 88 72 90 69 90 H31 C28 90 25 88 25 85 Z" />
+            <rect x="35" y="45" width="30" height="25" rx="1" stroke-dasharray="1.5 1.5" />
+            <line x1="25" y1="28" x2="35" y2="45" />
+            <line x1="75" y1="28" x2="65" y2="45" />
+            <line x1="25" y1="85" x2="35" y2="70" />
+            <line x1="75" y1="85" x2="65" y2="70" />
+        </svg>
+
+        <!-- Espelho de Mão -->
+        <svg class="bg-watermark watermark-2" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+            <circle cx="50" cy="40" r="28" />
+            <path d="M68 28 A 25 25 0 0 0 32 52" stroke-dasharray="1 3" />
+            <circle cx="50" cy="12" r="1.5" fill="currentColor" />
+            <circle cx="22" cy="40" r="1.5" fill="currentColor" />
+            <circle cx="78" cy="40" r="1.5" fill="currentColor" />
+            <path d="M50 68 V92" stroke-width="1.5" />
+            <path d="M47 92 H53" stroke-width="1.2" />
+            <path d="M45 68 C45 68 47 72 50 72 C53 72 55 68 55 68" />
+        </svg>
+
+        <!-- Pincel de Make e Brilhos -->
+        <svg class="bg-watermark watermark-3" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+            <line x1="20" y1="80" x2="65" y2="35" stroke-width="1.5" />
+            <rect x="63" y="27" width="8" height="12" transform="rotate(45 63 27)" />
+            <path d="M72 20 C68 12 78 8 84 14 C90 20 86 30 78 26 Z" />
+            <path d="M82 35 L84 39 L88 41 L84 43 L82 47 L80 43 L76 41 L80 39 Z" fill="currentColor" stroke="none" />
+            <path d="M55 15 L56 18 L59 19 L56 20 L55 23 L54 20 L51 19 L54 18 Z" fill="currentColor" stroke="none" opacity="0.6" />
+            <circle cx="70" cy="10" r="1" fill="currentColor" stroke="none" />
+            <circle cx="92" cy="28" r="0.8" fill="currentColor" stroke="none" />
+        </svg>
+
+        <!-- Cílios Minimalistas -->
+        <svg class="bg-watermark watermark-4" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+            <path d="M15 50 Q 50 30, 85 50" />
+            <line x1="20" y1="46" x2="10" y2="38" />
+            <line x1="30" y1="41" x2="22" y2="28" />
+            <line x1="40" y1="38" x2="36" y2="22" />
+            <line x1="50" y1="37" x2="50" y2="20" />
+            <line x1="60" y1="38" x2="64" y2="22" />
+            <line x1="70" y1="41" x2="78" y2="28" />
+            <line x1="80" y1="46" x2="90" y2="38" />
+        </svg>
+
+        <!-- Batom de Luxo -->
+        <svg class="bg-watermark watermark-5" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+            <rect x="35" y="55" width="30" height="35" rx="1" />
+            <rect x="38" y="47" width="24" height="8" />
+            <path d="M42 47 V 20 C42 16, 58 12, 58 20 V 47 Z" />
+            <line x1="42" y1="20" x2="58" y2="30" />
+        </svg>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <!-- Diamante decorativo no fundo -->
+            <div class="header-diamond-bg">
+                <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Esquerda (Faceta Escura) -->
+                    <polygon points="100,10 40,150 100,290" fill="url(#left-facet-grad)" />
+                    <!-- Direita (Faceta Clara) -->
+                    <polygon points="100,10 160,150 100,290" fill="url(#right-facet-grad)" />
+                    
+                    <!-- Linhas de contorno sutis -->
+                    <path d="M100 10 L160 150 L100 290 L40 150 Z" stroke="rgba(197, 168, 128, 0.2)" stroke-width="0.8" />
+                    <line x1="100" y1="10" x2="100" y2="290" stroke="rgba(197, 168, 128, 0.25)" stroke-width="0.8" />
+                    
+                    <!-- Brilhos (Sparkles) -->
+                    <circle cx="95" cy="70" r="1.2" fill="#c5a880" opacity="0.4" />
+                    <circle cx="115" cy="110" r="1.6" fill="#ffffff" opacity="0.5" />
+                    <circle cx="85" cy="180" r="0.9" fill="#c5a880" opacity="0.3" />
+                    <circle cx="105" cy="220" r="1.4" fill="#ffffff" opacity="0.45" />
+                    <circle cx="125" cy="160" r="1.1" fill="#c5a880" opacity="0.35" />
+
+                    <defs>
+                        <linearGradient id="left-facet-grad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="rgba(110, 85, 55, 0.05)" />
+                            <stop offset="100%" stop-color="rgba(138, 111, 77, 0.12)" />
+                        </linearGradient>
+                        <linearGradient id="right-facet-grad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="rgba(197, 168, 128, 0.14)" />
+                            <stop offset="100%" stop-color="rgba(165, 136, 100, 0.07)" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <div class="header-top">
+                <span class="decor-line"></span>
+                <svg class="decor-svg" viewBox="0 0 35 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 1 L11 6 L6 11 L1 6 Z" stroke="#c5a880" stroke-width="1.2" />
+                    <circle cx="17" cy="6" r="3.5" stroke="#c5a880" stroke-width="1.2" />
+                    <circle cx="26" cy="6" r="1.5" fill="#c5a880" />
+                </svg>
+                <span class="header-tag">AGENDAMENTO ONLINE</span>
+                <svg class="decor-svg" viewBox="0 0 35 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="6" r="1.5" fill="#c5a880" />
+                    <circle cx="18" cy="6" r="3.5" stroke="#c5a880" stroke-width="1.2" />
+                    <path d="M29 1 L34 6 L29 11 L24 6 Z" stroke="#c5a880" stroke-width="1.2" />
+                </svg>
+                <span class="decor-line"></span>
+            </div>
+            
+            <h1 class="brand-title">LUANA</h1>
+            <h2 class="brand-subtitle">Make Studio</h2>
+            
+            <div class="header-bottom">
+                <span class="decor-line-short"></span>
+                <svg class="decor-svg-bottom" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 1 L11 7 L6 13 L1 7 Z" stroke="#c5a880" stroke-width="1.2" />
+                    <path d="M16 3 L20 7 L16 11 L12 7 Z" fill="#c5a880" />
+                </svg>
+                <span class="decor-line-short"></span>
+            </div>
+            
+            <p class="cta-subtitle">AGENDE SEU HORÁRIO EM POUCOS SEGUNDOS</p>
+
+            <!-- Divisor entre o topo (header) e o meio da página -->
+            <div class="header-main-divider">
+                <span class="line"></span>
+                <span class="symbol">◇  ◆  ◇</span>
+                <span class="line"></span>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <form id="booking-form" class="booking-form" novalidate>
+            
+            <!-- Step 1: Escolha o Serviço -->
+            <section class="section">
+                <h3 class="section-title">1. ESCOLHA O SERVIÇO</h3>
+                
+                <div class="services-grid">
+                    <!-- Service 1: Social -->
+                    <div class="service-card" data-service="Social" data-price="120" tabindex="0">
+                        <div class="select-indicator">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="service-icon">
+                            <!-- Brushes SVG -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m18 8-1 1-5-5 1-1Z"/>
+                                <path d="m12 9-2 2H6v3c0 .6.4 1 1 1h3v-2l2-2Z"/>
+                                <path d="M9 16H5v3a2 2 0 0 0 2 2h3v-4Z"/>
+                                <path d="M19 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="service-name">Social</h4>
+                        <p class="service-price">A partir de R$120</p>
+                    </div>
+
+                    <!-- Service 2: Noiva -->
+                    <div class="service-card" data-service="Noiva" data-price="280" tabindex="0">
+                        <div class="select-indicator">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="service-icon">
+                            <!-- Tiara/Crown SVG -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 4 5 12h14l3-8-4 3-6-5-6 5Z"/>
+                                <path d="M3 20h18"/>
+                                <path d="M12 20v-4"/>
+                                <path d="M7 20v-2"/>
+                                <path d="M17 20v-2"/>
+                            </svg>
+                        </div>
+                        <h4 class="service-name">Noiva</h4>
+                        <p class="service-price">A partir de R$280</p>
+                    </div>
+
+                    <!-- Service 3: Festa -->
+                    <div class="service-card" data-service="Festa" data-price="150" tabindex="0">
+                        <div class="select-indicator">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="service-icon">
+                            <!-- Sparkles SVG -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/>
+                                <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z"/>
+                                <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="service-name">Festa</h4>
+                        <p class="service-price">A partir de R$150</p>
+                    </div>
+
+                    <!-- Service 4: Dia a dia -->
+                    <div class="service-card" data-service="Dia a dia" data-price="80" tabindex="0">
+                        <div class="select-indicator">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="service-icon">
+                            <!-- Mirror/Hand mirror SVG -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="6"/>
+                                <path d="M12 14v6"/>
+                                <path d="M9 20h6"/>
+                            </svg>
+                        </div>
+                        <h4 class="service-name">Dia a dia</h4>
+                        <p class="service-price">A partir de R$80</p>
+                    </div>
+                </div>
+                <!-- Input oculto para armazenar o serviço selecionado -->
+                <input type="hidden" id="selected-service" name="service" required>
+            </section>
+
+            <!-- Step 2: Seus Dados -->
+            <section class="section">
+                <h3 class="section-title">2. SEUS DADOS</h3>
+                
+                <!-- Nome Completo -->
+                <div class="form-group">
+                    <label for="name" class="form-label">NOME COMPLETO</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Ex: Ana Carolina Silva" required autocomplete="name">
+                </div>
+                
+                <!-- Data e Horário -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date" class="form-label">DATA</label>
+                        <input type="date" id="date" name="date" class="form-input" required min="">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time" class="form-label">HORÁRIO</label>
+                        <select id="time" name="time" class="form-input" required disabled>
+                            <option value="" disabled selected>Selecione uma data</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Observações -->
+                <div class="form-group">
+                    <label for="notes" class="form-label">OBSERVAÇÕES (OPCIONAL)</label>
+                    <textarea id="notes" name="notes" class="form-input form-textarea" placeholder="Ex: pele sensível, preferência de estilo..."></textarea>
+                </div>
+            </section>
+
+            <!-- Submit Button & Disclaimer -->
+            <div class="form-actions">
+                <button type="submit" id="submit-btn" class="submit-btn">
+                    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.012 2c-5.506 0-9.979 4.478-9.979 9.984 0 1.758.455 3.414 1.258 4.865L2 22l5.289-1.383c1.4.764 2.996 1.196 4.701 1.196 5.505 0 9.979-4.478 9.979-9.983 0-5.507-4.474-9.984-9.957-9.984zm5.748 14.127c-.244.689-1.218 1.253-1.677 1.297-.459.043-.919.223-2.923-.572-2.584-1.025-4.238-3.66-4.367-3.832-.128-.172-1.04-1.385-1.04-2.639 0-1.254.65-1.87.882-2.115.23-.245.503-.306.671-.306.168 0 .336.002.482.01.149.008.35-.057.548.423.2.487.683 1.666.744 1.787.06.121.101.263.02.424-.079.162-.12.263-.242.404-.122.141-.257.315-.367.423-.122.121-.25.253-.108.497.142.244.632 1.041 1.36 1.69.937.834 1.725 1.09 1.97 1.212.244.122.387.101.529-.062.142-.162.61-.71.773-.951.162-.244.325-.203.548-.121.223.081 1.414.667 1.657.789.244.122.406.182.465.283.06.101.06.586-.184 1.275z"/>
+                    </svg>
+                    <span>Confirmar via WhatsApp</span>
+                </button>
+                <p class="disclaimer">
+                    Você será redirecionada para o WhatsApp da Luana com os dados do agendamento já preenchidos.
+                </p>
+            </div>
+        </form>
+
+        <!-- Test and Utility Buttons -->
+        <footer class="footer">
+            <button id="reset-bookings-btn" class="reset-btn" type="button">
+                Limpar horários agendados (teste)
+            </button>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
