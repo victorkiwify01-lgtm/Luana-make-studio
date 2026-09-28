@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Luana Make Studio - Agendamento Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --gold: #c5a880;
+      --gold-light: #d4bc96;
+      --gold-dark: #a0845a;
+      --bg: #0f0f0f;
+      --bg2: #1a1a1a;
+      --bg3: #222;
+      --border: #2e2e2e;
+      --text: #e8ddd0;
+      --text-muted: #7a6a58;
+      --white: #ffffff;
+      --green: #25D366;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    /* ── MARCAS D'ÁGUA ── */
+    .bg-watermarks {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .wm {
+      position: absolute;
+      color: var(--gold);
+      opacity: 0.04;
+    }
+    .wm-1 { width: 180px; top: 5%; left: -30px; transform: rotate(-15deg); }
+    .wm-2 { width: 160px; top: 20%; right: -20px; transform: rotate(20deg); }
+    .wm-3 { width: 140px; top: 50%; left: 5%; transform: rotate(10deg); }
+    .wm-4 { width: 200px; bottom: 20%; right: -30px; transform: rotate(-10deg); }
+    .wm-5 { width: 150px; bottom: 5%; left: 10%; transform: rotate(5deg); }
+
+    /* ── CONTAINER ── */
+    .container {
+      position: relative; z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 2rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--bg);
+      text-align: center;
+      padding: 2rem 1.5rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(197,168,128,0.15);
+    }
+    .header-diamond {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 180px;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+    .decor-line {
+      display: block;
+      height: 1px;
+      width: 50px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .decor-line.right { background: linear-gradient(90deg, var(--gold), transparent); }
+    .decor-svg { width: 35px; flex-shrink: 0; }
+    .header-tag {
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .brand-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      color: var(--text);
+      line-height: 1;
+    }
+    .brand-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-top: 0.2rem;
+    }
+    .header-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0.9rem 0 0.7rem;
+    }
+    .decor-line-short {
+      display: block; height: 1px; width: 30px;
+      background: var(--gold); opacity: 0.5;
+    }
+    .decor-svg-bottom { width: 24px; }
+    .cta-subtitle {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .header-divider {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 1.2rem;
+    }
+    .header-divider .line { flex: 1; height: 1px; background: rgba(197,168,128,0.2); }
+    .header-divider .symbol { font-size: 12px; color: var(--gold); opacity: 0.4; white-space: nowrap; }
+
+    /* ── FORM ── */
+    .booking-form { padding: 0 1rem; }
+
+    .section { margin-top: 1.5rem; }
+    .section-title {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    /* ── SERVIÇOS ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .service-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .service-card:active, .service-card.selected {
+      border-color: var(--gold);
+      background: #1c1810;
+    }
+    .select-indicator {
+      position: absolute; top: 8px; right: 8px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .service-card.selected .select-indicator { display: flex; }
+    .select-indicator svg { width: 10px; color: #111; }
+    .service-icon {
+      width: 28px; height: 28px;
+      margin-bottom: 8px;
+      color: var(--gold);
+    }
+    .service-icon svg { width: 100%; height: 100%; }
+    .service-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .service-price { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .err { font-size: 11px; color: #e07070; margin-top: 6px; display: none; }
+    .err.show { display: block; }
+
+    /* ── CAMPOS ── */
+    .form-group { margin-top: 0.9rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 16px; /* 16px evita zoom automático no iOS */
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input::placeholder { color: #444; }
+    .form-input:focus { border-color: var(--gold); }
+    .form-textarea { resize: none; height: 80px; }
+
+    /* ── SELECT HORÁRIO — CORRIGIDO MOBILE ── */
+    .select-wrapper {
+      position: relative;
+    }
+    .select-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--gold);
+      pointer-events: none;
+    }
+    .select-wrapper select {
+      width: 100%;
+      padding: 0.85rem 2.5rem 0.85rem 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 16px; /* evita zoom no iOS */
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .select-wrapper select:focus { border-color: var(--gold); }
+    .select-wrapper select option { background: #1a1a1a; color: var(--text); }
+    .select-wrapper select:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── BOTÃO ── */
+    .form-actions { margin-top: 1.5rem; }
+    .submit-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-appearance: none;
+    }
+    .submit-btn:active { background: #1fb85a; }
+    .whatsapp-icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .disclaimer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e1e1e;
+      border: 1px solid var(--gold);
+      color: var(--text);
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 999;
+      white-space: nowrap;
+      max-width: 90vw;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── FOOTER ── */
+    .footer { text-align: center; margin-top: 2rem; }
+    .reset-btn {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      touch-action: manipulation;
+    }
+    .reset-btn:active { color: var(--gold); border-color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- Marcas d'água decorativas -->
+<div class="bg-watermarks" aria-hidden="true">
+  <!-- Perfume -->
+  <svg class="wm wm-1" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+    <rect x="42" y="10" width="16" height="12" rx="2"/>
+    <rect x="46" y="22" width="8" height="6"/>
+    <path d="M25 28H75V85C75 88 72 90 69 90H31C28 90 25 88 25 85Z"/>
+    <rect x="35" y="45" width="30" height="25" rx="1" stroke-dasharray="1.5 1.5"/>
+  </svg>
+  <!-- Espelho -->
+  <svg class="wm wm-2" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+    <circle cx="50" cy="40" r="28"/>
+    <path d="M50 68V92" stroke-width="1.5"/>
+    <path d="M47 92H53" stroke-width="1.2"/>
+  </svg>
+  <!-- Pincel -->
+  <svg class="wm wm-3" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+    <line x1="20" y1="80" x2="65" y2="35" stroke-width="1.5"/>
+    <path d="M72 20C68 12 78 8 84 14C90 20 86 30 78 26Z"/>
+    <path d="M82 35L84 39L88 41L84 43L82 47L80 43L76 41L80 39Z" fill="currentColor" stroke="none"/>
+  </svg>
+  <!-- Cílios -->
+  <svg class="wm wm-4" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+    <path d="M15 50Q50 30 85 50"/>
+    <line x1="30" y1="41" x2="22" y2="28"/>
+    <line x1="50" y1="37" x2="50" y2="20"/>
+    <line x1="70" y1="41" x2="78" y2="28"/>
+  </svg>
+  <!-- Batom -->
+  <svg class="wm wm-5" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+    <rect x="35" y="55" width="30" height="35" rx="1"/>
+    <rect x="38" y="47" width="24" height="8"/>
+    <path d="M42 47V20C42 16 58 12 58 20V47Z"/>
+  </svg>
+</div>
+
+<div class="container">
+  <!-- Header -->
+  <header>
+    <!-- Diamante de fundo -->
+    <svg class="header-diamond" viewBox="0 0 200 300" fill="none" aria-hidden="true">
+      <polygon points="100,10 40,150 100,290" fill="url(#lgL)"/>
+      <polygon points="100,10 160,150 100,290" fill="url(#lgR)"/>
+      <path d="M100 10L160 150L100 290L40 150Z" stroke="rgba(197,168,128,0.2)" stroke-width="0.8"/>
+      <line x1="100" y1="10" x2="100" y2="290" stroke="rgba(197,168,128,0.25)" stroke-width="0.8"/>
+      <circle cx="115" cy="110" r="1.6" fill="#fff" opacity="0.5"/>
+      <circle cx="95" cy="70" r="1.2" fill="#c5a880" opacity="0.4"/>
+      <defs>
+        <linearGradient id="lgL" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(110,85,55,0.05)"/>
+          <stop offset="100%" stop-color="rgba(138,111,77,0.12)"/>
+        </linearGradient>
+        <linearGradient id="lgR" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(197,168,128,0.14)"/>
+          <stop offset="100%" stop-color="rgba(165,136,100,0.07)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="header-top">
+      <span class="decor-line"></span>
+      <svg class="decor-svg" viewBox="0 0 35 12" fill="none">
+        <path d="M6 1L11 6L6 11L1 6Z" stroke="#c5a880" stroke-width="1.2"/>
+        <circle cx="17" cy="6" r="3.5" stroke="#c5a880" stroke-width="1.2"/>
+        <circle cx="26" cy="6" r="1.5" fill="#c5a880"/>
+      </svg>
+      <span class="header-tag">AGENDAMENTO ONLINE</span>
+      <svg class="decor-svg" viewBox="0 0 35 12" fill="none">
+        <circle cx="9" cy="6" r="1.5" fill="#c5a880"/>
+        <circle cx="18" cy="6" r="3.5" stroke="#c5a880" stroke-width="1.2"/>
+        <path d="M29 1L34 6L29 11L24 6Z" stroke="#c5a880" stroke-width="1.2"/>
+      </svg>
+      <span class="decor-line right"></span>
+    </div>
+
+    <h1 class="brand-title">LUANA</h1>
+    <h2 class="brand-subtitle">Make Studio</h2>
+
+    <div class="header-bottom">
+      <span class="decor-line-short"></span>
+      <svg class="decor-svg-bottom" viewBox="0 0 24 14" fill="none">
+        <path d="M6 1L11 7L6 13L1 7Z" stroke="#c5a880" stroke-width="1.2"/>
+        <path d="M16 3L20 7L16 11L12 7Z" fill="#c5a880"/>
+      </svg>
+      <span class="decor-line-short"></span>
+    </div>
+
+    <p class="cta-subtitle">AGENDE SEU HORÁRIO EM POUCOS SEGUNDOS</p>
+
+    <div class="header-divider">
+      <span class="line"></span>
+      <span class="symbol">◇ ◆ ◇</span>
+      <span class="line"></span>
+    </div>
+  </header>
+
+  <!-- Formulário -->
+  <form id="booking-form" class="booking-form" novalidate>
+
+    <!-- Serviços -->
+    <section class="section">
+      <h3 class="section-title">1. ESCOLHA O SERVIÇO</h3>
+      <div class="services-grid">
+
+        <div class="service-card" data-service="Maquiagem Social" data-price="120" tabindex="0">
+          <div class="select-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 8-1 1-5-5 1-1Z"/><path d="m12 9-2 2H6v3c0 .6.4 1 1 1h3v-2l2-2Z"/><path d="M9 16H5v3a2 2 0 0 0 2 2h3v-4Z"/><path d="M19 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+            </svg>
+          </div>
+          <p class="service-name">Social</p>
+          <p class="service-price">A partir de R$120</p>
+        </div>
+
+        <div class="service-card" data-service="Maquiagem de Noiva" data-price="280" tabindex="0">
+          <div class="select-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4 5 12h14l3-8-4 3-6-5-6 5Z"/><path d="M3 20h18"/><path d="M12 20v-4"/><path d="M7 20v-2"/><path d="M17 20v-2"/>
+            </svg>
+          </div>
+          <p class="service-name">Noiva</p>
+          <p class="service-price">A partir de R$280</p>
+        </div>
+
+        <div class="service-card" data-service="Maquiagem Festa" data-price="150" tabindex="0">
+          <div class="select-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/>
+            </svg>
+          </div>
+          <p class="service-name">Festa</p>
+          <p class="service-price">A partir de R$150</p>
+        </div>
+
+        <div class="service-card" data-service="Maquiagem Dia a Dia" data-price="80" tabindex="0">
+          <div class="select-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="6"/><path d="M12 14v6"/><path d="M9 20h6"/>
+            </svg>
+          </div>
+          <p class="service-name">Dia a dia</p>
+          <p class="service-price">A partir de R$80</p>
+        </div>
+
+      </div>
+      <input type="hidden" id="selected-service" name="service">
+      <p class="err" id="err-service">Selecione um serviço para continuar.</p>
+    </section>
+
+    <!-- Dados -->
+    <section class="section">
+      <h3 class="section-title">2. SEUS DADOS</h3>
+
+      <div class="form-group">
+        <label for="name" class="form-label">NOME COMPLETO</label>
+        <input type="text" id="name" name="name" class="form-input" placeholder="Ex: Ana Carolina Silva" autocomplete="name">
+        <p class="err" id="err-name">Informe seu nome completo.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date" class="form-label">DATA</label>
+          <input type="date" id="date" name="date" class="form-input">
+          <p class="err" id="err-date">Escolha uma data.</p>
+        </div>
+        <div class="form-group">
+          <label for="time" class="form-label">HORÁRIO</label>
+          <div class="select-wrapper">
+            <select id="time" name="time" class="form-input" disabled>
+              <option value="">Selecione a data</option>
+            </select>
+          </div>
+          <p class="err" id="err-time">Escolha um horário.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes" class="form-label">OBSERVAÇÕES (OPCIONAL)</label>
+        <textarea id="notes" name="notes" class="form-input form-textarea" placeholder="Ex: pele sensível, preferência de estilo..."></textarea>
+      </div>
+    </section>
+
+    <!-- Enviar -->
+    <div class="form-actions">
+      <button type="submit" class="submit-btn">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.012 2c-5.506 0-9.979 4.478-9.979 9.984 0 1.758.455 3.414 1.258 4.865L2 22l5.289-1.383c1.4.764 2.996 1.196 4.701 1.196 5.505 0 9.979-4.478 9.979-9.983 0-5.507-4.474-9.984-9.957-9.984zm5.748 14.127c-.244.689-1.218 1.253-1.677 1.297-.459.043-.919.223-2.923-.572-2.584-1.025-4.238-3.66-4.367-3.832-.128-.172-1.04-1.385-1.04-2.639 0-1.254.65-1.87.882-2.115.23-.245.503-.306.671-.306.168 0 .336.002.482.01.149.008.35-.057.548.423.2.487.683 1.666.744 1.787.06.121.101.263.02.424-.079.162-.12.263-.242.404-.122.141-.257.315-.367.423-.122.121-.25.253-.108.497.142.244.632 1.041 1.36 1.69.937.834 1.725 1.09 1.97 1.212.244.122.387.101.529-.062.142-.162.61-.71.773-.951.162-.244.325-.203.548-.121.223.081 1.414.667 1.657.789.244.122.406.182.465.283.06.101.06.586-.184 1.275z"/>
+        </svg>
+        <span>Confirmar via WhatsApp</span>
+      </button>
+      <p class="disclaimer">Você será redirecionada para o WhatsApp da Luana com os dados do agendamento já preenchidos.</p>
+    </div>
+  </form>
+
+  <footer class="footer">
+    <button id="reset-btn" class="reset-btn" type="button">Limpar horários reservados (teste)</button>
+  </footer>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+  // ── CONFIGURAÇÃO ──
+  const WHATSAPP_NUMBER = '5562999999999'; // Troque pelo número da Luana com DDI+DDD
+  const HORARIOS = [
+    '08:00','08:30','09:00','09:30',
+    '10:00','10:30','11:00','11:30',
+    '12:00','12:30','13:00','13:30',
+    '14:00','14:30','15:00','15:30',
+    '16:00','16:30','17:00','17:30',
+    '18:00','18:30','19:00','19:30','20:00'
+  ];
+
+  // ── ESTADO ──
+  let selectedService = '';
+  function getBookings() {
+    try { return JSON.parse(localStorage.getItem('lms_bookings') || '{}'); } catch { return {}; }
+  }
+  function saveBooking(date, time) {
+    const b = getBookings();
+    if (!b[date]) b[date] = [];
+    if (!b[date].includes(time)) b[date].push(time);
+    localStorage.setItem('lms_bookings', JSON.stringify(b));
+  }
+
+  // ── TOAST ──
+  function showToast(msg, dur = 3000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), dur);
+  }
+
+  // ── SERVIÇOS ──
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('click', () => selectCard(card));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCard(card); } });
+  });
+  function selectCard(card) {
+    document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedService = card.dataset.service;
+    document.getElementById('selected-service').value = selectedService;
+    document.getElementById('err-service').classList.remove('show');
+  }
+
+  // ── DATA ──
+  const dateInput = document.getElementById('date');
+  const timeSelect = document.getElementById('time');
+  dateInput.min = new Date().toISOString().split('T')[0];
+  dateInput.addEventListener('change', populateHorarios);
+
+  function populateHorarios() {
+    const date = dateInput.value;
+    timeSelect.innerHTML = '';
+    if (!date) {
+      timeSelect.disabled = true;
+      timeSelect.innerHTML = '<option value="">Selecione a data</option>';
+      return;
+    }
+    const booked = getBookings()[date] || [];
+    const available = HORARIOS.filter(h => !booked.includes(h));
+    if (available.length === 0) {
+      timeSelect.disabled = true;
+      timeSelect.innerHTML = '<option value="">Sem horários disponíveis</option>';
+      showToast('Não há horários disponíveis nesta data.');
+      return;
+    }
+    timeSelect.disabled = false;
+    const placeholder = document.createElement('option');
+    placeholder.value = ''; placeholder.textContent = 'Selecione';
+    timeSelect.appendChild(placeholder);
+    available.forEach(h => {
+      const opt = document.createElement('option');
+      opt.value = h; opt.textContent = h;
+      timeSelect.appendChild(opt);
+    });
+    document.getElementById('err-time').classList.remove('show');
+  }
+
+  // ── SUBMIT ──
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let ok = true;
+
+    if (!selectedService) { document.getElementById('err-service').classList.add('show'); ok = false; }
+    const name = document.getElementById('name').value.trim();
+    if (!name) { document.getElementById('err-name').classList.add('show'); ok = false; } else { document.getElementById('err-name').classList.remove('show'); }
+    const date = dateInput.value;
+    if (!date) { document.getElementById('err-date').classList.add('show'); ok = false; } else { document.getElementById('err-date').classList.remove('show'); }
+    const time = timeSelect.value;
+    if (!time) { document.getElementById('err-time').classList.add('show'); ok = false; } else { document.getElementById('err-time').classList.remove('show'); }
+
+    if (!ok) return;
+
+    const notes = document.getElementById('notes').value.trim();
+    const dateFmt = new Date(date + 'T12:00:00').toLocaleDateString('pt-BR');
+
+    let msg = `Olá, Luana! Gostaria de agendar um horário 💄\n\n`;
+    msg += `*Serviço:* ${selectedService}\n`;
+    msg += `*Nome:* ${name}\n`;
+    msg += `*Data:* ${dateFmt}\n`;
+    msg += `*Horário:* ${time}h\n`;
+    if (notes) msg += `*Observações:* ${notes}\n`;
+    msg += `\nAguardo confirmação! 🙏`;
+
+    saveBooking(date, time);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+    showToast('Redirecionando para o WhatsApp...', 3000);
+  });
+
+  // ── RESET ──
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    localStorage.removeItem('lms_bookings');
+    populateHorarios();
+    showToast('Horários limpos!');
+  });
+</script>
+</body>
+</html>
